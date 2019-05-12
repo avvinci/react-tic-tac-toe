@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-
 function Square(props) {
   return (
     <button className="square" onClick={props.onClick}>
@@ -98,9 +97,12 @@ class Game extends React.Component {
 
   render() {
     const history = this.state.history;
-    const current = history[this.state.stepNumber];
+    const steps = this.state.stepNumber; 
+    const current = history[steps];
     const winner = calculateWinner(current.squares);
-    const squareNo = this.state.squareNo[this.state.stepNumber] ; 
+    const squareNo = this.state.squareNo ; 
+    const lastMove = squareNo[steps] ;
+  
 
     const moves = history.map((step, move) => {
       const desc = move ?
@@ -130,7 +132,9 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <div> Last Move at cell : ( { Math.floor ((squareNo.curCell )/3) + 1 } ,{ (squareNo.curCell )%3 + 1 } ) </div>
+          <div>Move history : </div>
+          <ol>  {squareNo.map(item => (<li key = {item.curCell}>  { Math.floor ((item.curCell )/3) + 1 } ,{ (item.curCell )%3 + 1 }</li>) ) }</ol>
+          <div> Last Move at cell : ( { Math.floor ((lastMove.curCell )/3) + 1 } ,{ (lastMove.curCell )%3 + 1 } ) </div>
           <ol>{moves}</ol>
         </div>
       </div>
